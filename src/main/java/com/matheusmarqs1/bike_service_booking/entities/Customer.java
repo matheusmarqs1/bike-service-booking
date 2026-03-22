@@ -1,12 +1,17 @@
 package com.matheusmarqs1.bike_service_booking.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +26,11 @@ public class Customer implements Serializable {
 	private String cpf;
 	private String email;
 	private String phone;
+	private Boolean isActive = true;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer")
+	private Set<Bike> bikes = new HashSet<>();
 	
 	public Customer() {
 	}
@@ -72,6 +82,18 @@ public class Customer implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+	
+	public Set<Bike> getBikes() {
+		return bikes;
 	}
 
 	@Override

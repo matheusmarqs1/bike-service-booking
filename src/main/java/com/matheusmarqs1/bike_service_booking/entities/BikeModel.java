@@ -1,8 +1,11 @@
 package com.matheusmarqs1.bike_service_booking.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matheusmarqs1.bike_service_booking.entities.enums.BikeType;
 
 import jakarta.persistence.Entity;
@@ -11,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +31,10 @@ public class BikeModel implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "brand_id")
 	private Brand brand;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "bikeModel")
+	private Set<Bike> bikes = new HashSet<>();
 	
 	public BikeModel() {
 	}
@@ -71,6 +79,10 @@ public class BikeModel implements Serializable {
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
+	}
+	
+	public Set<Bike> getBikes() {
+		return bikes;
 	}
 
 	@Override
